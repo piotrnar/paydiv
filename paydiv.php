@@ -24,7 +24,7 @@ if (!file_exists($archive)) {
 }
 
 // Remove the assets folder and the old GnuPG keyrings
-@system("rm -rf ".ASSET."/ gnupg/");
+rrmdir(ASSET."/ gnupg/");
 
 // Setup GnuPG envirionment
 @mkdir("gnupg/");
@@ -115,7 +115,7 @@ finito(0);
 
 
 function finito($code) {
-	system("rm -rf ./".ASSET."/ gnupg/");
+	rrmdir(ASSET."/ gnupg/");
 	exit($code);
 }
 
@@ -214,4 +214,16 @@ function process_transfer($o) {
 	return FALSE;
 }
 
+function rrmdir($dir) {
+	if (is_dir($dir)) {
+		$objects = scandir($dir);
+		foreach ($objects as $object) {
+			if ($object != "." && $object != "..") {
+				if (filetype($dir."/".$object) == "dir") rrmdir($dir."/".$object); else unlink($dir."/".$object);
+			}
+		}
+		reset($objects);
+		rmdir($dir);
+	}
+}
 ?>
