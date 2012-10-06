@@ -91,13 +91,15 @@ foreach(array_keys($balance) as $fp) {
 
 
 echo "\n4) Generating the JSON-RPC command...\n";
-$rpc = 'sendmany "" \'{';
+$rpc = 'sendmany "'.ACCOUNT.'" \'{';
 $com = false;
 foreach(array_keys($balance) as $fp) {
-	if ($com)  $rpc .= ', ';
-	$am = $balance[$fp]*TOTAL_BTC/$total_shares;
-	$rpc .= '"'.$divaddr[$fp].'":'.sprintf('%.8f',$am);
-	$com = true;
+	$am = round($balance[$fp]*TOTAL_BTC/$total_shares, 8);
+	if ($am>0) {
+		if ($com)  $rpc .= ', ';
+		$rpc .= '"'.$divaddr[$fp].'":'.sprintf('%.8f',$am);
+		$com = true;
+	}
 }
 $rpc .= '}\'';
 
