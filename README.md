@@ -14,4 +14,3 @@ work on any other system.
 Just make sure that your shell would recognize the following commands:
 > php
 > gpg
-> tar
