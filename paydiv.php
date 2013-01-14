@@ -197,7 +197,7 @@ function execute_contract($s) {
 function process_divadr($o) {
 	global $signed, $divaddr;
 
-	if ($signed!=$o['USER']) {
+	if (strcasecmp($signed,$o['USER'])!=0) {
 		return "DIVADR must be signed by the asset owner";
 	}
 
@@ -213,7 +213,7 @@ function process_divadr($o) {
 
 function process_transfer($o) {
 	global $signed, $prvseq, $balance;
-	if ($signed!=ADMIN_PGP) {
+	if (strcasecmp($signed,ADMIN_PGP)!=0) {
 		return "TRANSFER must be signed by the asset issuer";
 	}
 
